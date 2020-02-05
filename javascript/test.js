@@ -49,9 +49,9 @@ describe('La classe Stack', () => {
     s.push(1);
     s.push(2);
     s.push(3);
-    expect(s.peek()).toEqual(3);
+    expect(s.peek()).toEqual(1);
     expect(s.pop()).toEqual(3);
-    expect(s.peek()).toEqual(2);
+    expect(s.peek()).toEqual(1);
     expect(s.pop()).toEqual(2);
     expect(s.peek()).toEqual(1);
     expect(s.pop()).toEqual(1);
@@ -146,6 +146,13 @@ describe('La fonction puissance4', () => {
       [ 2, 1, 1, 2 ],
       [ 2, 1, 1, 2 ]]
       )).toEqual(1);
+
+    expect(puissance4(
+     [[ 0, 0, 0, 1 ],
+      [ 2, 1, 1, 2 ],
+      [ 2, 1, 1, 2 ],
+      [ 1, 2, 2, 2 ]]
+      )).toEqual(1);
   });
 
   test('doit vérifier quand le joueur 2 gagne', () => {
@@ -154,6 +161,13 @@ describe('La fonction puissance4', () => {
       [ 1, 2, 2, 0, 0 ],
       [ 2, 2, 1, 1, 2 ],
       [ 2, 2, 1, 1, 2 ]]
+      )).toEqual(2);
+
+    expect(puissance4(
+     [[ 1, 2, 0, 0, 0 ],
+      [ 1, 1, 2, 0, 0 ],
+      [ 2, 2, 1, 1, 2 ],
+      [ 2, 2, 2, 2, 1 ]]
       )).toEqual(2);
   });
 

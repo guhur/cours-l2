@@ -16,9 +16,6 @@ class Button extends React.Component {
     return (
       <button
          data-testid="button"
-         { /*
-            A remplir
-         */ }
       >
       {this.props.children ? this.props.children : "Add text!"}
       </button>);
