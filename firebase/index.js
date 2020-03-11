@@ -12,12 +12,29 @@ const config = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
-class Firebase {
+export const FirebaseContext = React.createContext(null);
+
+export class FirebaseProvider extends React.Component {
   constructor() {
     app.initializeApp(config);
     this.auth = firebase.default.auth();
+    this.db = firebase.default.database();
+    this.state = {
+      isLogged: false
+    };
   }
-
+  
+  componentDidMount() {
+      this.listener = firebase.onAuthUserListener(
+        authUser => {
+          if (!!authUser) {
+            this.props.history.push(ROUTES.SIGN_IN);
+          }
+        },
+        () => this.props.history.push(ROUTES.SIGN_IN),
+      );
+    }
+  
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
 
@@ -26,16 +43,18 @@ class Firebase {
 
   doSignOut = () => this.auth.signOut();
 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
-
-  doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+  render () {
+    return (
+      <FirebaseContext.Provider value={this.state}>
+        {this.props.children}
+      </FirebaseContext.Provider>
+    );
+  }
 }
 
-export default Firebase;
-export const FirebaseContext = React.createContext(null);
+
 export const withFirebase = Component => props => (
   <FirebaseContext.Consumer>
     {firebase => <Component {...props} firebase={firebase} />}
   </FirebaseContext.Consumer>
 );
-
